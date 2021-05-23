@@ -174,12 +174,12 @@ int main (int argc, char *argv[])
 
    int n_per_p = n*n/processes;
    if (my_rank==0) {
-   	   printf( "size   : n = %zu => %d M elements (%d MB)\n",
+   	   /*printf( "size   : n = %zu => %d M elements (%d MB)\n",
            	n, (int)(n*n/1000000), (int)(n*n*sizeof(double) / (1024*1024)));
-	   printf( "iter   : %d\n", max_iter);
+	   printf( "iter   : %d\n", max_iter);*/
 	   printf("running with %d ranks\n", processes);
 
-   	print(a, n);
+   	//print(a, n);
    }
    start = time_gettime ();
 
@@ -188,15 +188,14 @@ int main (int argc, char *argv[])
       a = b;
       b = tmp;
       relax( a, b, n, my_rank, n_per_p, processes);
-	printf("rank %d done!\n", my_rank);
       MPI_Allgather(b+(my_rank*n_per_p), n_per_p, MPI_FLOAT, b, n_per_p, MPI_FLOAT, MPI_COMM_WORLD);
 
    }
    
    finish = time_gettime ();
    if (my_rank==0) {
-   	printf( "Matrix after %d iterations:\n", i);
-   	print( b, n);
+   	//printf( "Matrix after %d iterations:\n", i);
+   	//print( b, n);
 
    	const char *id = "Total time: ";
    	time_print_elapsed (id, start, finish);
